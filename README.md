@@ -10,6 +10,8 @@ This project captures faces from a webcam feed, detects them using `dlib`, and a
 - Press `c` to clear the captured faces list.
 - Press `r` to randomly select one of the captured faces (Feature is Work in Progress).
 
+
+
 ## Requirements
 
 - Python 3.x
@@ -21,10 +23,11 @@ To install the required packages, run:
 
 ```bash
 pip install -r requirements.txt
-
+```
 ## Usage
 
 To start, run the following command:
 
 ```bash
 python main.py
+```
