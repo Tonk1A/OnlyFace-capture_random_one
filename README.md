@@ -1,8 +1,14 @@
-# Face Capture Project
+# OnlyFace™ - Face capture and randomly select Project
 
 ## Overview
 
-This project captures faces from a webcam feed, detects them using `dlib`, and assigns a unique ID to each face. Detected faces are saved as images in the `images` directory.
+This project captures faces from a webcam feed, detects them using `dlib`, and assigns a unique ID to each face. Detected faces are saved as images in the `images` directory then randomly select only one.
+
+## Control
+
+press "q" to stop and quit Onlyface
+press "c" to clear captured faces list
+(WIP)press "r" to randomly select one of the capture faces
 
 ## Requirements
 
