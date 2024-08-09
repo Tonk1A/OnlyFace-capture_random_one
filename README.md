@@ -6,9 +6,9 @@ This project captures faces from a webcam feed, detects them using `dlib`, and a
 
 ## Control
 
-press "q" to stop and quit Onlyface
-press "c" to clear captured faces list
-(WIP)press "r" to randomly select one of the capture faces
+- Press `q` to stop and quit OnlyFace™.
+- Press `c` to clear the captured faces list.
+- Press `r` to randomly select one of the captured faces (Feature is Work in Progress).
 
 ## Requirements
 
@@ -21,3 +21,10 @@ To install the required packages, run:
 
 ```bash
 pip install -r requirements.txt
+
+## Usage
+
+To start, run the following command:
+
+```bash
+python main.py
