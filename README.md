@@ -32,6 +32,6 @@ To start, run the following command:
 python Onlyface.py
 ```
 
-Captured face images will be saved in the 'images' directory with unique IDs (e.g., 'face_1.jpg', 'face_2.jpg'). The 'r' key allows you to randomly select one of these images.
+Captured face images will be saved in the `images` directory with unique IDs (e.g., `face_1.jpg`, `face_2.jpg`). The `r` key allows you to randomly select one of these images.
 
-**Note**: All saved images in the 'images' directory will be deleted when clearing captured faces list or quit the program.
+**Note**: All saved images in the `images` directory will be deleted when clearing captured faces list or quit the program.
