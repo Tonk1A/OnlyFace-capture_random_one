@@ -6,9 +6,9 @@ This project captures faces from a webcam feed, detects them using `dlib`, and a
 
 ## Control
 
-- Press `q` to stop and quit OnlyFace™.
+- Press `q` to quit OnlyFace™.
 - Press `c` to clear the captured faces list.
-- Press `r` to randomly select one of the captured faces (Feature is Work in Progress).
+- Press `r` to randomly select one of the captured faces
 
 
 
@@ -29,5 +29,9 @@ pip install -r requirements.txt
 To start, run the following command:
 
 ```bash
-python main.py
+python Onlyface.py
 ```
+
+Captured face images will be saved in the 'images' directory with unique IDs (e.g., 'face_1.jpg', 'face_2.jpg'). The 'r' key allows you to randomly select one of these images.
+
+**Note**: All saved images in the 'images' directory will be deleted when clearing captured faces list or quit the program.
