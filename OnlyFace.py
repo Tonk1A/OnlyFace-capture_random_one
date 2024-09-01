@@ -11,9 +11,9 @@ from PyQt5.QtCore import QTimer, Qt
 video_cap = cv2.VideoCapture(0)
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-saved_img = "images"
-if not os.path.exists(saved_img):
-    os.makedirs(saved_img)
+SAVED_IMG = "images"
+if not os.path.exists(SAVED_IMG):
+    os.makedirs(SAVED_IMG)
 
 face_id = 0
 
@@ -139,7 +139,7 @@ class MyApp(QWidget):
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
-            delete_all_files(saved_img)
+            delete_all_files(SAVED_IMG)
             self.video_label.setText('No Image')
             print("All images deleted.")
         else:
