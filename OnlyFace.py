@@ -2,7 +2,8 @@ import sys
 import cv2
 import os
 import random
-from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget, QMessageBox, QDialog
+from PyQt5.QtWidgets import QApplication, QLabel, QPushButton
+from PyQt5.QtWidgets import QVBoxLayout, QWidget, QMessageBox, QDialog
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import QTimer, Qt
 
@@ -81,8 +82,10 @@ class MyApp(QWidget):
             
             face_count = len(faces)
             for (x, y, w, h) in faces:
-                frame = cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                cv2.putText(frame, f'Faces: {face_count}', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+                frame = cv2.rectangle(frame, (x, y), 
+                (x + w, y + h), (0, 255, 0), 2)
+                cv2.putText(frame, f'Faces: {face_count}', (x, y - 10),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
             
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             image = QImage(frame, frame.shape[1], frame.shape[0], QImage.Format_RGB888)
