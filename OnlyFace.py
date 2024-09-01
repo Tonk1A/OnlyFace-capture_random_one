@@ -2,22 +2,21 @@ import sys
 import cv2
 import os
 import random
-from PyQt5.QtWidgets import QApplication, QLabel, QPushButton
-from PyQt5.QtWidgets import QVBoxLayout, QWidget, QMessageBox, QDialog
+from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget, QMessageBox, QDialog
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import QTimer, Qt
 
-# ตั้งค่า Video Capture และตัวตรวจจับใบหน้า Haar Cascades
+
 video_cap = cv2.VideoCapture(0)
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-SAVED_IMG = "images"
-if not os.path.exists(SAVED_IMG):
-    os.makedirs(SAVED_IMG)
+saved_img = "images"
+if not os.path.exists(saved_img):
+    os.mkdir(saved_img)
 
 face_id = 0
 
-# ฟังก์ชันสำหรับลบไฟล์ทั้งหมดในโฟลเดอร์
+
 def delete_all_files(directory):
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
@@ -27,46 +26,46 @@ def delete_all_files(directory):
         except Exception as e:
             print(f'Failed to delete {file_path}. Reason: {e}')
 
-# GUI ที่มีปุ่ม Random และ Delete
+
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
 
         self.initUI()
 
-        # Timer สำหรับการอัปเดตเฟรมจากกล้อง
+
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_frame)
         self.timer.start(30)  # อัปเดตเฟรมทุก ๆ 30 ms
 
     def initUI(self):
-        # Layout
+       
         layout = QVBoxLayout()
 
-        # Label to show video feed
+      
         self.video_label = QLabel("Camera Feed", self)
         layout.addWidget(self.video_label)
 
-        # Random Button
+       
         self.btn_random = QPushButton('Random (r)', self)
         self.btn_random.clicked.connect(self.random_image)
         layout.addWidget(self.btn_random)
 
-        # Delete Button
+       
         self.btn_delete = QPushButton('Delete (d)', self)
         self.btn_delete.clicked.connect(self.delete_images)
         layout.addWidget(self.btn_delete)
 
-        # Set Layout
+       
         self.setLayout(layout)
 
-        # Window settings
+        
         self.setWindowTitle('Face Detection App')
         self.setGeometry(300, 300, 600, 500)
         self.show()
 
     def keyPressEvent(self, event):
-        # กำหนดการทำงานของปุ่มต่างๆ บนคีย์บอร์ด
+        
         if event.key() == Qt.Key_R:
             self.random_image()
         elif event.key() == Qt.Key_D:
@@ -104,15 +103,15 @@ class MyApp(QWidget):
             global face_id
             face_id += 1
             
-            # สุ่มเลือกใบหน้า
+            
             (x, y, w, h) = random.choice(faces)
             img_name = os.path.join(saved_img, f"face_{face_id}.jpg")
 
-            # ตัดเฉพาะส่วนที่เป็นใบหน้าแล้วบันทึก
+           
             face_img = frame[y:y + h, x:x + w]
             cv2.imwrite(img_name, face_img)
 
-            # Show captured face in a new dialog
+            
             self.show_captured_face(img_name)
             print(f"Image saved as {img_name}")
         else:
@@ -124,7 +123,7 @@ class MyApp(QWidget):
         
         layout = QVBoxLayout()
 
-        # Display captured face
+        
         pixmap = QPixmap(img_name)
         label = QLabel()
         label.setPixmap(pixmap)
@@ -139,7 +138,7 @@ class MyApp(QWidget):
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
-            delete_all_files(SAVED_IMG)
+            delete_all_files(saved_img)
             self.video_label.setText('No Image')
             print("All images deleted.")
         else:
