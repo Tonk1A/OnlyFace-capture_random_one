@@ -1,15 +1,14 @@
 import sys
 import cv2
-import dlib
 import os
 import random
 from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget, QMessageBox, QDialog
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import QTimer, Qt
 
-
+# ตั้งค่า Video Capture และตัวตรวจจับใบหน้า Haar Cascades
 video_cap = cv2.VideoCapture(0)
-detector = dlib.get_frontal_face_detector()
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 saved_img = "images"
 if not os.path.exists(saved_img):
@@ -17,7 +16,7 @@ if not os.path.exists(saved_img):
 
 face_id = 0
 
-
+# ฟังก์ชันสำหรับลบไฟล์ทั้งหมดในโฟลเดอร์
 def delete_all_files(directory):
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
@@ -27,44 +26,46 @@ def delete_all_files(directory):
         except Exception as e:
             print(f'Failed to delete {file_path}. Reason: {e}')
 
+# GUI ที่มีปุ่ม Random และ Delete
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
 
         self.initUI()
 
+        # Timer สำหรับการอัปเดตเฟรมจากกล้อง
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_frame)
         self.timer.start(30)  # อัปเดตเฟรมทุก ๆ 30 ms
 
     def initUI(self):
-       
+        # Layout
         layout = QVBoxLayout()
 
-        
+        # Label to show video feed
         self.video_label = QLabel("Camera Feed", self)
         layout.addWidget(self.video_label)
 
-        
+        # Random Button
         self.btn_random = QPushButton('Random (r)', self)
         self.btn_random.clicked.connect(self.random_image)
         layout.addWidget(self.btn_random)
 
-        
+        # Delete Button
         self.btn_delete = QPushButton('Delete (d)', self)
         self.btn_delete.clicked.connect(self.delete_images)
         layout.addWidget(self.btn_delete)
 
-      
+        # Set Layout
         self.setLayout(layout)
 
-       
+        # Window settings
         self.setWindowTitle('Face Detection App')
         self.setGeometry(300, 300, 600, 500)
         self.show()
 
     def keyPressEvent(self, event):
-       
+        # กำหนดการทำงานของปุ่มต่างๆ บนคีย์บอร์ด
         if event.key() == Qt.Key_R:
             self.random_image()
         elif event.key() == Qt.Key_D:
@@ -76,13 +77,10 @@ class MyApp(QWidget):
         ret, frame = video_cap.read()
         if ret:
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            faces = detector(gray)
+            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
             
-        
             face_count = len(faces)
-            
-            for i, face in enumerate(faces):
-                x, y, w, h = face.left(), face.top(), face.width(), face.height()
+            for (x, y, w, h) in faces:
                 frame = cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 cv2.putText(frame, f'Faces: {face_count}', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
             
@@ -97,21 +95,21 @@ class MyApp(QWidget):
             return
         
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = detector(gray)
+        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
         
-        if faces:
+        if len(faces) > 0:
             global face_id
             face_id += 1
             
             # สุ่มเลือกใบหน้า
-            face = random.choice(faces)
-            x, y, w, h = face.left(), face.top(), face.width(), face.height()
+            (x, y, w, h) = random.choice(faces)
             img_name = os.path.join(saved_img, f"face_{face_id}.jpg")
 
+            # ตัดเฉพาะส่วนที่เป็นใบหน้าแล้วบันทึก
             face_img = frame[y:y + h, x:x + w]
             cv2.imwrite(img_name, face_img)
 
-            
+            # Show captured face in a new dialog
             self.show_captured_face(img_name)
             print(f"Image saved as {img_name}")
         else:
@@ -123,7 +121,7 @@ class MyApp(QWidget):
         
         layout = QVBoxLayout()
 
-    
+        # Display captured face
         pixmap = QPixmap(img_name)
         label = QLabel()
         label.setPixmap(pixmap)
