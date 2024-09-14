@@ -39,6 +39,24 @@ class MyApp(QWidget):
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_frame)
         self.timer.start(30)  # อัปเดตเฟรมทุก ๆ 30 ms
+        self.face_id = self.get_latest_face_id()
+        
+    def get_latest_face_id(self):
+        '''
+        get latest face id for saved images
+        '''
+        face_ids = []
+        for filename in os.listdir(saved_img):
+            if filename.startswith("face_") and filename.endswith(".jpg"):
+                try:
+                    face_id = int(filename.split('_')[1].split('.')[0])
+                    face_ids.append(face_id)
+                except ValueError:
+                    pass
+        if face_ids:
+            return max(face_ids) + 1
+        return 1
+    
     def initUI(self):
         '''
         werwr
@@ -100,8 +118,7 @@ class MyApp(QWidget):
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
         if len(faces) > 0:
-            global face_id
-            face_id += 1
+            self.face_id += 1
             (x, y, w, h) = random.choice(faces)
             img_name = os.path.join(saved_img, f"face_{face_id}.jpg")
             face_img = frame[y:y + h, x:x + w]
