@@ -1,36 +1,35 @@
-# OnlyFace™ - Face capture and randomly select Project
+# OnlyFace - Face capture and randomly select Project
 
 ## Overview
 
-This project captures faces from a webcam feed, detects them using `dlib`, and assigns a unique ID to each face. Detected faces are saved as images in the `images` directory then randomly select only one.
-
-## Control
-
-- Press `q` to quit OnlyFace™.
-- Press `c` to clear the captured faces list.
-- Press `r` to randomly select one of the captured faces
+The OnlyFace captures and saves randomly detected faces from your webcam. It uses OpenCV for face detection with Haar cascades and PyQt5 for the graphical user interface.
 
 ## Requirements
 
 - Python 3.x
-- `opencv-python==4.10.0.84`
-- `dlib==19.24.5`
-- `numpy==2.0.1`
-- `Pillolw==10.4.0`
+- OpenCV
+- PyQt5
 
 To install the required packages, run:
 
 ```bash
 pip install -r requirements.txt
 ```
+
 ## Usage
 
-To start, run the following command:
+1. To start the Application: Run OnlyFace.py
 
-```bash
-python Onlyface.py
-```
+2. Capture a Random Face:
+- Press the 'Random (r)' button or press the 'R' key to save a randomly detected face as an image.
 
-Captured face images will be saved in the `images` directory with unique IDs (e.g., `face_1.jpg`, `face_2.jpg`). The `r` key allows you to randomly select one of these images.
+3. Delete All Images:
+- Press the 'Delete (d)' button or press the 'D' key to delete all saved images.
 
-**Note**: All saved images in the `images` directory will be deleted when clearing captured faces list or quit the program.
+4. Exit the Application:
+- Press the 'Q' key or close the window to exit the application.
+
+
+## Notes
+- The application captures images from your webcam at a resolution of 1280x720.
+- Ensure you have a webcam connected and properly configured before starting the application.

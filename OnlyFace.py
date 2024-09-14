@@ -94,7 +94,7 @@ class MyApp(QWidget):
         self.setWindowTitle('Face Detection App')
         self.setGeometry(0, 0, 0, 0)
         self.show()
-        
+
     def get_latest_face_id(self):
         '''
         Retrieves the latest face ID from the saved images directory.
@@ -107,7 +107,6 @@ class MyApp(QWidget):
                     face_ids.append(face_id)
                 except ValueError:
                     pass
-        
         if face_ids:
             return max(face_ids) + 1
         return 1
@@ -233,7 +232,7 @@ class MyApp(QWidget):
         reply = QMessageBox.question(
             self,
             'Delete Confirmation',
-            'Are you sure you want to delete all images?', 
+            'Are you sure you want to delete all images?',
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.No
         )
