@@ -21,13 +21,13 @@ pip install -r requirements.txt
 1. To start the Application: Run OnlyFace.py
 
 2. Capture a Random Face:
-- Press the 'Random (r)' button or press the 'R' key to save a randomly detected face as an image.
+    - Press the 'Random (r)' button or press the 'R' key to save a randomly detected face as an image.
 
 3. Delete All Images:
-- Press the 'Delete (d)' button or press the 'D' key to delete all saved images.
+    - Press the 'Delete (d)' button or press the 'D' key to delete all saved images.
 
 4. Exit the Application:
-- Press the 'Q' key or close the window to exit the application.
+    - Press the 'Q' key or close the window to exit the application.
 
 
 ## Notes
