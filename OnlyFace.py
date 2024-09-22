@@ -29,7 +29,7 @@ video_cap.set(cv2.CAP_PROP_FRAME_WIDTH, CAMERA_WIDTH)
 video_cap.set(cv2.CAP_PROP_FRAME_HEIGHT, CAMERA_HEIGHT)
 
 # Load the face detection model
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_profileface.xml')
 
 # Create a directory to save images
 SAVED_IMG = "images"
